@@ -1,36 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compartir Texto con QR</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-<style type="text/css">
-.grande { font-size: 60px; }
-</style>
-<script>
-// Escribir aqui el código Javascript
-</script>
+    <title>Conexión Wi-Fi | Global Ice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo {
+            width: 200px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .qr-code {
+            margin-bottom: 30px;
+        }
+        .wifi-details {
+            font-size: 1.1em;
+            color: #444;
+        }
+        .wifi-details p {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+        }
+        .footer a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h2>Información de WiFi</h2>
-    <p>Para conectarte a la red WIFI de Global Visitas</p>
-    <p><strong>Nombre red:</strong> Global_Visitas</p>
-    <p><strong>Contraseña:</strong> 7,XkpLxM</p>
-    
-    <h2>Escanea el Código QR</h2>
-    <div id="qrcode" title="WIFI:T:WPA;S:Global_Visitas;P:7,XkpLxM;;"><canvas width="256" height="256" style="display: none;"></canvas><img style="display: block;" src="data:image/png;base64,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"></div>
-    
-    <script>
-        function generateQR() {
-            let wifiInfo = "WIFI:T:WPA;S:Global_Visitas;P:7,XkpLxM;;";
-            document.getElementById("qrcode").innerHTML = "";
-            new QRCode(document.getElementById("qrcode"), wifiInfo);
-        }
+
+    <div class="container">
+        <!-- Logo de Global Ice -->
+        <img src="https://i0.wp.com/globalice.cl/wp-content/uploads/2022/04/logo1024.png?w=1498&ssl=1" alt="Logo de Global Ice" class="logo">
+
+        <h1>Conéctate a la red Wi-Fi</h1>
+        <p>Escanea el código QR para conectarte a la red Wi-Fi <strong>"Global_Visitas"</strong> y disfruta de una experiencia sin interrupciones.</p>
         
-        window.onload = generateQR;
-    </script>
+        <div class="qr-code">
+            <!-- Código QR generado aquí -->
+            <img src="data:image/png;base64, TU_CODIGO_QR_AQUI" alt="Código QR Wi-Fi" style="max-width: 250px;">
+        </div>
 
+        <div class="wifi-details">
+            <p><strong>Nombre de la Red:</strong> Global_Visitas</p>
+            <p><strong>Contraseña:</strong> 7,XkpLxM</p>
+        </div>
 
-</body></html>
+        <div class="footer">
+            <p>&copy; 2025 Global Ice. Todos los derechos reservados.</p>
+            <p>Visita nuestro <a href="https://globalice.cl/" target="_blank">sitio web</a> para más información.</p>
+        </div>
+    </div>
+
+</body>
+</html>
