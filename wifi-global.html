@@ -63,6 +63,17 @@
             color: #1a73e8;
         }
 
+        .button-copy {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
         .footer {
             margin-top: 30px;
             font-size: 0.9em;
@@ -106,7 +117,8 @@
         <!-- Detalles de la red Wi-Fi -->
         <div class="wifi-details">
             <p><i class="fas fa-wifi"></i><strong>Nombre de la Red:</strong> Global_Visitas</p>
-            <p><i class="fas fa-key"></i><strong>Contraseña:</strong> 7,XkpLxM</p>
+            <p><i class="fas fa-key"></i><strong>Contraseña:</strong> <span id="wifi-password">7,XkpLxM</span></p>
+            <button class="button-copy" onclick="copyPassword()">Copiar Contraseña</button>
         </div>
 
         <!-- Instrucciones adicionales -->
@@ -117,6 +129,31 @@
             <p>Visita nuestro <a href="https://globalice.cl/" target="_blank">sitio web</a> para más información.</p>
         </div>
     </div>
+
+    <script>
+        function copyPassword() {
+            // Obtiene el texto de la contraseña
+            const password = document.getElementById("wifi-password").textContent;
+
+            // Crea un campo de texto temporal para copiar el contenido
+            const tempInput = document.createElement("input");
+            tempInput.value = password;
+            document.body.appendChild(tempInput);
+
+            // Selecciona el contenido del campo
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // Para dispositivos móviles
+
+            // Copia el texto al portapapeles
+            document.execCommand("copy");
+
+            // Elimina el campo temporal
+            document.body.removeChild(tempInput);
+
+            // Alerta para el usuario
+            alert("Contraseña copiada al portapapeles");
+        }
+    </script>
 
 </body>
 </html>
